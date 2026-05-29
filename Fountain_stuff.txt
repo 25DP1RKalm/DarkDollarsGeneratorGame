@@ -1,0 +1,18 @@
+width: 640px;
+height: 333px;
+
+First location - Field_location_1.jpg
+1.  Going through door: Field_location_2.png
+    1. Opening chest: get 300 D$
+    2. Going back: return to previous room
+2. Going right: Field_location_3.png
+    1. Going forward: Shop
+        items to buy: 
+        2. Dark candy (heal in the fight)
+        3. Sword (do more damage)
+        4. Shield (take less damage)
+    2. Going left: Field_location_4.png
+        1. Read sign: "Please do not look in the hole :)"
+        2. talk: says something about the hole. Can either give you money or give you nothing if you do something.
+        3. go in hole: Secret boss (very impossible joke boss against the watercooler)
+    3. Going right: 

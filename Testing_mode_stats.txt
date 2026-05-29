@@ -1,0 +1,31 @@
+Testing mode stats:
+
+let EnemyHP = 1
+let cooldown = 0
+
+let money = 3000
+let bonus = 2
+let upgradeUnlocked = 0
+let upgradeCost = 50
+let RalUnlocked = 0
+let RalBonus = 0
+let RalTime = 1000
+let RalCost = 200
+let RalTimeScreen = RalTime / 1000
+let FountainUnlocked = 0
+
+Regular game stats:
+
+let EnemyHP = 1000
+let cooldown = 0
+
+let money = 0
+let bonus = 1
+let upgradeUnlocked = 0
+let upgradeCost = 50
+let RalUnlocked = 0
+let RalBonus = 0
+let RalTime = 1000
+let RalCost = 200
+let RalTimeScreen = RalTime / 1000
+let FountainUnlocked = 0

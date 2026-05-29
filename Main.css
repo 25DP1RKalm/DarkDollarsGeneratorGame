@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body {
+    font-family: "Press Start 2P", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    color: white;
+    background-image: url("Castle_Town_location.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#Credits {
+    font-family: "Press Start 2P", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    color: white;
+    font-size: 10px;
+    background-color: black;
+    border: 2px solid cyan;
+    border-radius: 20px;
+    padding: 10px;
+    position: absolute;
+    align-self: flex-start;
+    width: 250px;
+}
+#title {
+    background-color: black;
+    border: 3px solid green;
+    border-radius: 20px;
+    padding: 20px;
+    width: fit-content;
+    margin: 0;
+}
+#amount {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+#mon {
+    background-color: black;
+    border: 3px solid greenyellow;
+    border-radius: 10px;
+    padding: 10px;
+    width: 200px;
+    display: flex;
+    justify-content: right;
+    margin: 20px;
+}
+#div {
+    background-color: black;
+    border: 3px solid yellow;
+    border-radius: 20px;
+    padding: 10px;
+    width: 1098px;
+    height: 208px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+}
+#Fountain {
+    background-color: black;
+    border: 3px solid red;
+    border-radius: 20px;
+    padding: 10px;
+    margin-top: 20px;
+    width: 1098px;
+    height: 450px;
+}
+#FountainImage {
+    width: 640px;
+    height: 333px;
+    border: 2px solid white;
+}
+#ui {
+    display: flex;
+}
+#UIButtons {
+    display: flex;
+    flex-direction: column;
+}
+#EveryButton {
+    display: flex;
+    flex-direction: column;
+}
+.FountainButton {
+    font-family: "Press Start 2P", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    background-color: black;
+    padding: 10px;
+    border: 4px double purple;
+    color: white;
+    font-size: 15px;
+    margin: 10px;
+    transition: 0.2s;
+}
+.FountainButton:hover {
+    background-color: rgb(36, 36, 36);
+    transition: 0.2s;
+}
+.FountainButton:active {
+    transform: scale(1.05);
+}
+#fountainInfo {
+    margin: 10px;
+}
+#TheInventory {
+    display: flex;
+    justify-content: left;
+    background-color: black;
+    border: 1px solid cyan;
+    border-radius: 20px;
+    padding: 5px;
+    font-size: 10px;
+    margin-left: 10px;
+    margin-top: 5px;
+}
+.InventoryText {
+    color: rgb(0, 255, 21);
+    margin: 5px;
+    border: 1px solid rgb(0, 157, 255);
+    padding: 5px;
+}
+#BattleBoxUI {
+    display: flex;
+    flex-direction: row-reverse;
+}
+.BattleUIText {
+    color: red;
+    background-color: black;
+    border: 1px solid rgb(255, 140, 0);
+    border-radius: 10px;
+    padding: 5px;
+    margin: 5px;
+}
+#buttons {
+    display: flex;
+    justify-content: left;
+}
+.button {
+    font-family: "Press Start 2P", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    background-color: green;
+    padding: 10px;
+    border: 2px solid white;
+    border-radius: 10px;
+    font-size: 15px;
+    margin-right: 10px;
+    transition: 0.2s;
+}
+.button:hover {
+    background-color: rgb(0, 167, 0);
+    color: rgb(58, 58, 58);
+    transition: 0.2s;
+}
+.button:active {
+    transform: scale(1.05);
+    background-color: rgb(0, 218, 0);
+    color: rgb(117, 117, 117);
+}

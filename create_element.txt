@@ -1,0 +1,24 @@
+Example:
+
+const Element = document.createElement("button")
+const ElementText = document.createTextNode("Text")
+Element.appendChild(ElementText)
+div.appendChild(Element)
+Element.id = "element"
+element = document.getElementById("element")
+
+Creating a new element:
+
+const Battle = document.createElement("div")
+UI.appendChild(Battle)
+Battle.id = "BattleBox"
+battle = document.getElementById("BattleBox")
+
+
+let EnemyHPElement = document.createElement("p")
+let EnemyHPElementText = document.createTextNode("Watercooler HP: 1000")
+EnemyHPElement.appendChild(EnemyHPElementText)
+BattleUI.appendChild(EnemyHPElement)
+EnemyHPElement.id = "enemyHPelement"
+EnemyHPElement.classlist.add("BattleUIText")
+EnemyhpText = document.getElementById("enemyHPelement")
