@@ -15,4 +15,8 @@ First location - Field_location_1.jpg
         1. Read sign: "Please do not look in the hole :)"
         2. talk: says something about the hole. Can either give you money or give you nothing if you do something.
         3. go in hole: Secret boss (very impossible joke boss against the watercooler)
-    3. Going right: 
+    3. Going right: Field_location_5.png
+        1. Read sign: "Enter the correct code. Not sure? Ask around."
+        2. Add spade
+        3. Add diamond
+        4. Go back?

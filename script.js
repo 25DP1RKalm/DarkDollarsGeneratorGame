@@ -36,6 +36,11 @@ let ShieldOwned = 5
 let HP = 100
 let CoolerWon = 0
 let CoolerReward = 0
+let CodeFound = 0
+let CodeInput = [0, 0, 0, 0]
+let CodeCorrect = [1, 2, 2, 1]
+let CodeSolved = 0
+let CodeBeingSolved = 0
 
 let EnemyHP = 1000
 let cooldown = 0
@@ -56,12 +61,18 @@ const WaterCoolerAttack = (defend) => {
         if (EnemyHP > 0) {
             if (defend === 1) {
                 let WatercoolerDamage = Math.round((22 - ShieldOwned/5*2)/2)
+                if (WatercoolerDamage <= 0) {
+                    WatercoolerDamage = 0
+                }
                 fountainInfo.innerHTML = "* The watercooler attacks you and deals " + WatercoolerDamage + " damage."
                 HP -= WatercoolerDamage
                 hpText.innerHTML = "Your HP: " + HP
                 cooldown = 0
             } else {
                 let WatercoolerDamage = 22 - ShieldOwned/5*2
+                if (WatercoolerDamage <= 0) {
+                    WatercoolerDamage = 2
+                }
                 fountainInfo.innerHTML = "* The watercooler attacks you and deals " + WatercoolerDamage + " damage."
                 HP -= WatercoolerDamage
                 hpText.innerHTML = "Your HP: " + HP
@@ -278,7 +289,7 @@ gen.addEventListener("click", () => {
                                             chestOpened = 1
                                         } else if (LocationInFountain === 2 && chestOpened === 1) {
                                             fountainInfo.innerHTML = "* The chest is empty."
-                                        } else if (LocationInFountain === 3) {
+                                        } else if (LocationInFountain === 3 && CodeFound === 0) {
                                             FountainImage.src = "Shop.jpg"
                                             fountainInfo.innerHTML = "* You enter the shop and the shopkeeper offers you some items."
                                             button1.innerHTML = "Buy Dark Candy for 300 D$?"
@@ -318,6 +329,17 @@ gen.addEventListener("click", () => {
                                             button4.style.display = "inline-block"
                                             button4.innerHTML = "Go back?"
                                             LocationInFountain = 5
+                                        } else if (LocationInFountain === 7 && CodeBeingSolved === 0 && CodeSolved === 0) {
+                                            fountainInfo.innerHTML = "* The sign says: 'Enter the correct code. Not sure? Ask around.'"
+                                            CodeFound = 1
+                                        } else if (LocationInFountain === 3 && CodeFound === 1) {
+                                            FountainImage.src = "Shop.jpg"
+                                            fountainInfo.innerHTML = "* You enter the shop and the shopkeeper offers you some items."
+                                            button1.innerHTML = "Buy Dark Candy for 300 D$?"
+                                            button2.innerHTML = "Upgrade Sword for 500 D$?"
+                                            button3.innerHTML = "Upgrade Shield for 400 D$?"
+                                            button4.innerHTML = "Ask about code?"
+                                            LocationInFountain = 4
                                         }
                                     })
                                     button1.addEventListener("mouseenter", () => {
@@ -405,7 +427,56 @@ gen.addEventListener("click", () => {
                                                         fountainInfo.innerHTML = "* You don't have any Dark Candies left."}
                                                     WaterCoolerAttack(0)
                                                 } else if (LocationInFountain === 5 && CoolerWon === 1 && cooldown === 0) {
-                                                    fountainInfo.innerHTML = "*The creatures home is now safe."
+                                                    fountainInfo.innerHTML = "* The creatures home is now safe."
+                                                } else if (LocationInFountain === 3 && CodeSolved === 0) {
+                                                    FountainImage.src = "Field_location_5.png"
+                                                    fountainInfo.innerHTML = "* The path is blocked. There seems to be some kind of puzzle."
+                                                    button1.innerHTML = "Read sign?"
+                                                    button2.innerHTML = "Add spade?"
+                                                    button3.innerHTML = "Add diamond?"
+                                                    button4.innerHTML = "Go back?"
+                                                    LocationInFountain = 7
+                                                } else if (LocationInFountain === 7) {
+                                                    if (CodeInput[0] === 0) {
+                                                        CodeInput[0] = 2
+                                                        fountainInfo.innerHTML = "* Diamond"
+                                                        CodeBeingSolved = 1
+                                                    } else if (CodeInput[1] === 0) {
+                                                        CodeInput[1] = 2
+                                                        fountainInfo.innerHTML += " diamond"
+                                                    } else if (CodeInput[2] === 0) {
+                                                        CodeInput[2] = 2
+                                                        fountainInfo.innerHTML += " diamond"
+                                                    } else if (CodeInput[3] === 0) {
+                                                        CodeInput[3] = 2
+                                                        fountainInfo.innerHTML += " diamond"
+                                                        let equal = () => {
+                                                            return JSON.stringify(CodeInput) === JSON.stringify(CodeCorrect);
+                                                        }
+                                                        setTimeout(() => {
+                                                            if (equal()) {
+                                                                fountainInfo.innerHTML = "* Congrats, that was the right code! The path opens."
+                                                                CodeSolved = 1
+                                                                CodeBeingSolved = 0
+                                                                CodeFound = 0
+                                                                button2.style.display = "none"
+                                                                button3.style.display = "none"
+                                                                button1.innerHTML = "Go forward?"
+                                                            } else {
+                                                                fountainInfo.innerHTML = "* Wrong code!"
+                                                                CodeInput = [0, 0, 0, 0]
+                                                                CodeBeingSolved = 0
+                                                            }
+                                                        }, 1000)
+                                                    }
+                                                } else if (LocationInFountain === 3 && CodeSolved === 1) {
+                                                    FountainImage.src = "Field_location_5.png"
+                                                    fountainInfo.innerHTML = "* The path is no longer blocked."
+                                                    button1.innerHTML = "Go forward?"
+                                                    button2.style.display = "none"
+                                                    button3.style.display = "none"
+                                                    button4.innerHTML = "Go back?"
+                                                    LocationInFountain = 7
                                                 }
                                             })
                                             button4.addEventListener("click", () => {
@@ -417,7 +488,7 @@ gen.addEventListener("click", () => {
                                                     button3.remove()
                                                     button4.remove()
                                                     LocationInFountain = 1
-                                                } else if (LocationInFountain === 4) {
+                                                } else if (LocationInFountain === 4 && CodeFound === 0) {
                                                     FountainImage.src = "Field_Location_3.png"
                                                     fountainInfo.innerHTML = "* You turn right and see a strange shop, as well as two other paths."
                                                     button1.innerHTML = "Enter shop?"
@@ -437,6 +508,35 @@ gen.addEventListener("click", () => {
                                                     cooldown = 1
                                                     fountainInfo.innerHTML = "* You defend. Reduced damage taken."
                                                     WaterCoolerAttack(1)
+                                                } else if (LocationInFountain === 7 && CodeBeingSolved === 0 && CodeSolved === 0) {
+                                                    FountainImage.src = "Field_Location_3.png"
+                                                    fountainInfo.innerHTML = "* You turn right and see a strange shop, as well as two other paths."
+                                                    button1.innerHTML = "Enter shop?"
+                                                    button2.innerHTML = "Go left?"
+                                                    button3.innerHTML = "Go right?"
+                                                    button4.innerHTML = "Go back?"
+                                                    LocationInFountain = 3
+                                                } else if (LocationInFountain === 4 && CodeFound === 1) {
+                                                    fountainInfo.innerHTML = "* The shopkeeper says: 'A code you say? I remember the diamonds in the middle'"
+                                                    setTimeout(() => {
+                                                        FountainImage.src = "Field_Location_3.png"
+                                                        fountainInfo.innerHTML = "* You turn right and see a strange shop, as well as two other paths."
+                                                        button1.innerHTML = "Enter shop?"
+                                                        button2.innerHTML = "Go left?"
+                                                        button3.innerHTML = "Go right?"
+                                                        button4.innerHTML = "Go back?"
+                                                        LocationInFountain = 3
+                                                    }, 5000)
+                                                } else if (LocationInFountain === 7 && CodeBeingSolved === 0 && CodeSolved === 1) {
+                                                    FountainImage.src = "Field_Location_3.png"
+                                                    fountainInfo.innerHTML = "* You turn right and see a strange shop, as well as two other paths."
+                                                    button1.innerHTML = "Enter shop?"
+                                                    button2.style.display = "inline-block"
+                                                    button2.innerHTML = "Go left?"
+                                                    button3.style.display = "inline-block"
+                                                    button3.innerHTML = "Go right?"
+                                                    button4.innerHTML = "Go back?"
+                                                    LocationInFountain = 3
                                                 }
                                             })
                                             button3.addEventListener("mouseenter", () => {
@@ -467,13 +567,13 @@ gen.addEventListener("click", () => {
                                             button3.innerHTML = "Go in the hole?"
                                             button4.innerHTML = "Go back?"
                                             LocationInFountain = 5
-                                        } else if (LocationInFountain === 5 && CoolerWon === 0) {
+                                        } else if (LocationInFountain === 5 && CoolerWon === 0 && CodeFound === 0) {
                                             fountainInfo.innerHTML = "* The creatures say: 'The hole was once our home, but now something scary lives there.'"
                                         } else if (LocationInFountain === 6 && cooldown === 0) {
                                             cooldown = 1
                                             fountainInfo.innerHTML = "* You begged for mercy, but the watercooler shows none."
                                             WaterCoolerAttack(0)
-                                        } else if (LocationInFountain === 5 && CoolerWon === 1 && CoolerReward === 0) {
+                                        } else if (LocationInFountain === 5 && CoolerWon === 1 && CoolerReward === 0 && CodeFound === 0) {
                                             CoolerReward = 1
                                             fountainInfo.innerHTML = "* The creatures say: 'Thank you for defeating the watercooler, our home is now safe.'"
                                             cooldown = 1
@@ -485,8 +585,43 @@ gen.addEventListener("click", () => {
                                                     cooldown = 0
                                                 }, 1)
                                             }, 5000)
-                                        } else if (LocationInFountain === 5 && CoolerWon === 1 && CoolerReward === 1 && cooldown === 0) {
+                                        } else if (LocationInFountain === 5 && CoolerWon === 1 && CoolerReward === 1 && cooldown === 0 && CodeFound === 0) {
                                             fountainInfo.innerHTML = "* The creatures are happy."
+                                        } else if (LocationInFountain === 5 && cooldown === 0 && CodeFound === 1) {
+                                            fountainInfo.innerHTML = "* The creatures say: 'A code? We don't really know, but we think it starts and ends with spades.'"
+                                        } else if (LocationInFountain === 7) {
+                                            if (CodeInput[0] === 0) {
+                                                CodeInput[0] = 1
+                                                fountainInfo.innerHTML = "* Spade"
+                                                CodeBeingSolved = 1
+                                            } else if (CodeInput[1] === 0) {
+                                                CodeInput[1] = 1
+                                                fountainInfo.innerHTML += " spade"
+                                            } else if (CodeInput[2] === 0) {
+                                                CodeInput[2] = 1
+                                                fountainInfo.innerHTML += " spade"
+                                            } else if (CodeInput[3] === 0) {
+                                                CodeInput[3] = 1
+                                                fountainInfo.innerHTML += " spade"
+                                                let equal = () => {
+                                                    return JSON.stringify(CodeInput) === JSON.stringify(CodeCorrect);
+                                                }
+                                                setTimeout(() => {
+                                                    if (equal()) {
+                                                        fountainInfo.innerHTML = "* Congrats, that was the right code! The path opens."
+                                                        CodeSolved = 1
+                                                        CodeBeingSolved = 0
+                                                        CodeFound = 0
+                                                        button2.style.display = "none"
+                                                        button3.style.display = "none"
+                                                        button1.innerHTML = "Go forward?"
+                                                    } else {
+                                                        fountainInfo.innerHTML = "* Wrong code!"
+                                                        CodeInput = [0, 0, 0, 0]
+                                                        CodeBeingSolved = 0
+                                                    }
+                                                }, 1000)
+                                            }
                                         }
                                     })
                                     DarkFountain.remove()
