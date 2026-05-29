@@ -41,7 +41,10 @@ let CodeInput = [0, 0, 0, 0]
 let CodeCorrect = [1, 2, 2, 1]
 let CodeSolved = 0
 let CodeBeingSolved = 0
+let RouxlshpText
+let RouxlsWon = 0
 
+let RouxlsHP = 100
 let EnemyHP = 1
 let cooldown = 0
 
@@ -340,6 +343,37 @@ gen.addEventListener("click", () => {
                                             button3.innerHTML = "Upgrade Shield for 400 D$?"
                                             button4.innerHTML = "Ask about code?"
                                             LocationInFountain = 4
+                                        } else if (LocationInFountain === 7 && CodeBeingSolved === 0 && CodeSolved === 1) {
+                                            fountainInfo.innerHTML = "* A huge castle looms in front of you."
+                                            FountainImage.src = "Field_Location_6.png"
+                                            button1.innerHTML = "Enter castle?"
+                                            button4.innerHTML = "Go back?"
+                                            LocationInFountain = 8
+                                        } else if (LocationInFountain === 8) {
+                                            FountainImage.src = "Card_castle.jpg"
+                                            fountainInfo.innerHTML = "* In the castle there are three gates. Two of them contain the guards."
+                                            button1.innerHTML = "Enter the left gate?"
+                                            button2.style.display = "inline-block"
+                                            button2.innerHTML = "Enter the middle gate?"
+                                            button3.style.display = "inline-block"
+                                            button3.innerHTML = "Enter the right gate?"
+                                            button4.innerHTML = "Go back?"
+                                            LocationInFountain = 9
+                                        } else if (LocationInFountain === 9 && RouxlsWon === 0) {
+                                            FountainImage.src = "Rouxls_kaard_battle.png"
+                                            fountainInfo.innerHTML = "* You enter the first gate and face one of the guards - Rouxls Kaard."
+                                            let RouxlsHPElement = document.createElement("p")
+                                            let RouxlsHPElementText = document.createTextNode("Rouxls HP: 100")
+                                            RouxlsHPElement.appendChild(RouxlsHPElementText)
+                                            BattleUI.appendChild(RouxlsHPElement)
+                                            RouxlsHPElement.id = "rouxlsHPelement"
+                                            RouxlsHPElement.classList.add("BattleUIText")
+                                            RouxlshpText = document.getElementById("rouxlsHPelement")
+                                            button1.innerHTML = "Fight?"
+                                            button2.innerHTML = "Talk?"
+                                            button3.innerHTML = "Use item?"
+                                            button4.innerHTML = "Defend?"
+                                            LocationInFountain = 10
                                         }
                                     })
                                     button1.addEventListener("mouseenter", () => {
@@ -537,6 +571,20 @@ gen.addEventListener("click", () => {
                                                     button3.innerHTML = "Go right?"
                                                     button4.innerHTML = "Go back?"
                                                     LocationInFountain = 3
+                                                } else if (LocationInFountain === 8) {
+                                                    FountainImage.src = "Field_location_5.png"
+                                                    fountainInfo.innerHTML = "* The path is no longer blocked."
+                                                    button1.innerHTML = "Go forward?"
+                                                    button4.innerHTML = "Go back?"
+                                                    LocationInFountain = 7
+                                                } else if (LocationInFountain === 9) {
+                                                    fountainInfo.innerHTML = "* A huge castle looms in front of you."
+                                                    FountainImage.src = "Field_Location_6.png"
+                                                    button1.innerHTML = "Enter castle?"
+                                                    button2.style.display = "none"
+                                                    button3.style.display = "none"
+                                                    button4.innerHTML = "Go back?"
+                                                    LocationInFountain = 8
                                                 }
                                             })
                                             button3.addEventListener("mouseenter", () => {

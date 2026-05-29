@@ -9,16 +9,13 @@ element = document.getElementById("element")
 
 Creating a new element:
 
-const Battle = document.createElement("div")
-UI.appendChild(Battle)
-Battle.id = "BattleBox"
-battle = document.getElementById("BattleBox")
-
-
-let EnemyHPElement = document.createElement("p")
-let EnemyHPElementText = document.createTextNode("Watercooler HP: 1000")
-EnemyHPElement.appendChild(EnemyHPElementText)
-BattleUI.appendChild(EnemyHPElement)
-EnemyHPElement.id = "enemyHPelement"
-EnemyHPElement.classlist.add("BattleUIText")
-EnemyhpText = document.getElementById("enemyHPelement")
+else if (LocationInFountain === 10 && cooldown === 0 && RouxlsHP > 0) {
+    cooldown = 1
+    fountainInfo.innerHTML = "* You attack with your sword and deal " + SwordOwned + " damage."
+    RouxlsHP -= SwordOwned
+    if (RouxlsHP < 0) {
+        RouxlsHP = 0
+    }
+    RouxlshpText.innerHTML = "Rouxls HP: " + RouxlsHP
+    RouxlsAttack(0, 1000)
+}
