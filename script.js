@@ -42,11 +42,11 @@ let CodeCorrect = [1, 2, 2, 1]
 let CodeSolved = 0
 let CodeBeingSolved = 0
 
-let EnemyHP = 1000
+let EnemyHP = 1
 let cooldown = 0
 
-let money = 0
-let bonus = 1
+let money = 3000
+let bonus = 2
 let upgradeUnlocked = 0
 let upgradeCost = 50
 let RalUnlocked = 0
@@ -56,7 +56,7 @@ let RalCost = 200
 let RalTimeScreen = RalTime / 1000
 let FountainUnlocked = 0
 
-const WaterCoolerAttack = (defend) => {
+const WaterCoolerAttack = (defend, time) => {
     setTimeout(() => {
         if (EnemyHP > 0) {
             if (defend === 1) {
@@ -117,7 +117,7 @@ const WaterCoolerAttack = (defend) => {
                 cooldown = 0
             }, 1)
         }
-    }, 1000)
+    }, time)
 }
 
 amount.innerHTML = money + " D$"
@@ -317,7 +317,7 @@ gen.addEventListener("click", () => {
                                                 EnemyHP = 0
                                             }
                                             EnemyhpText.innerHTML = "Watercooler HP: " + EnemyHP
-                                            WaterCoolerAttack(0)
+                                            WaterCoolerAttack(0, 1000)
                                         } else if (LocationInFountain === 6 && cooldown === 0 && EnemyHP <= 0) {
                                             FountainImage.src = "Field_Location_4.png"
                                             fountainInfo.innerHTML = "* You go left and see a hole in the ground, a sign next to it and some strange looking creatures."
@@ -425,7 +425,7 @@ gen.addEventListener("click", () => {
                                                         hpText.innerHTML = "Your HP: " + HP
                                                     } else {
                                                         fountainInfo.innerHTML = "* You don't have any Dark Candies left."}
-                                                    WaterCoolerAttack(0)
+                                                    WaterCoolerAttack(0, 1000)
                                                 } else if (LocationInFountain === 5 && CoolerWon === 1 && cooldown === 0) {
                                                     fountainInfo.innerHTML = "* The creatures home is now safe."
                                                 } else if (LocationInFountain === 3 && CodeSolved === 0) {
@@ -507,7 +507,7 @@ gen.addEventListener("click", () => {
                                                 } else if (LocationInFountain === 6 && cooldown === 0) {
                                                     cooldown = 1
                                                     fountainInfo.innerHTML = "* You defend. Reduced damage taken."
-                                                    WaterCoolerAttack(1)
+                                                    WaterCoolerAttack(1, 1000)
                                                 } else if (LocationInFountain === 7 && CodeBeingSolved === 0 && CodeSolved === 0) {
                                                     FountainImage.src = "Field_Location_3.png"
                                                     fountainInfo.innerHTML = "* You turn right and see a strange shop, as well as two other paths."
@@ -572,7 +572,7 @@ gen.addEventListener("click", () => {
                                         } else if (LocationInFountain === 6 && cooldown === 0) {
                                             cooldown = 1
                                             fountainInfo.innerHTML = "* You begged for mercy, but the watercooler shows none."
-                                            WaterCoolerAttack(0)
+                                            WaterCoolerAttack(0, 3000)
                                         } else if (LocationInFountain === 5 && CoolerWon === 1 && CoolerReward === 0 && CodeFound === 0) {
                                             CoolerReward = 1
                                             fountainInfo.innerHTML = "* The creatures say: 'Thank you for defeating the watercooler, our home is now safe.'"
