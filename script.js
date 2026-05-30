@@ -42,14 +42,17 @@ let CodeCorrect = [1, 2, 2, 1]
 let CodeSolved = 0
 let CodeBeingSolved = 0
 let RouxlshpText
+let LancerhpText
 let RouxlsWon = 0
+let LancerWon = 0
 
-let RouxlsHP = 100
-let EnemyHP = 1
+let RouxlsHP = 200
+let LancerHP = 150
+let EnemyHP = 500
 let cooldown = 0
 
-let money = 3000
-let bonus = 2
+let money = 0
+let bonus = 1
 let upgradeUnlocked = 0
 let upgradeCost = 50
 let RalUnlocked = 0
@@ -113,6 +116,134 @@ const WaterCoolerAttack = (defend, time) => {
             FountainImage.src = "Victory.jpg"
             button1.innerHTML = "Leave?"
             CoolerWon = 1
+            button2.style.display = "none"
+            button3.style.display = "none"
+            button4.style.display = "none"
+            setTimeout(() => {
+                cooldown = 0
+            }, 1)
+        }
+    }, time)
+}
+
+const RouxlsAttack = (defend, time) => {
+    setTimeout(() => {
+        if (RouxlsHP > 0) {
+            if (defend === 1) {
+                let RouxlsDamage = Math.round((12 - ShieldOwned/5*2)/2)
+                if (RouxlsDamage <= 0) {
+                    RouxlsDamage = 0
+                }
+                fountainInfo.innerHTML = "* Rouxls attacks you and deals " + RouxlsDamage + " damage."
+                HP -= RouxlsDamage
+                hpText.innerHTML = "Your HP: " + HP
+                cooldown = 0
+            } else {
+                let RouxlsDamage = 12 - ShieldOwned/5*2
+                if (RouxlsDamage <= 0) {
+                    RouxlsDamage = 2
+                }
+                fountainInfo.innerHTML = "* Rouxls attacks you and deals " + RouxlsDamage + " damage."
+                HP -= RouxlsDamage
+                hpText.innerHTML = "Your HP: " + HP
+                cooldown = 0
+            }
+        }
+        if (HP <= 0) {
+            cooldown = 1
+            HP = 0
+            hpText.innerHTML = "Your HP: " + HP
+            fountainInfo.innerHTML = "* You were defeated by Rouxls Kaard."
+            FountainImage.src = "GameOver.png"
+            setTimeout(() => {
+                FountainImage.src = "Field_Location_1.jpg"
+                fountainInfo.innerHTML = "* Suddenly, you are in a strange field. This place doesn't feel real."
+                button1.innerHTML = "Go through door?"
+                button2.innerHTML = "Go right?"
+                button3.remove()
+                button4.remove()
+                HP = 100
+                hpText.innerHTML = "Your HP: " + HP
+                RouxlshpText.remove()
+                RouxlsHP = 100
+                LocationInFountain = 1
+                cooldown = 0
+            }, 3000)
+        } else if (RouxlsHP <= 0) {
+            cooldown = 1
+            RouxlsHP = 0
+            RouxlshpText.remove()
+            HP = 100
+            hpText.innerHTML = "Your HP: " + HP
+            RouxlshpText.innerHTML = "Rouxls HP: " + RouxlsHP
+            fountainInfo.innerHTML = "* You defeated Rouxls Kaard! You win!"
+            FountainImage.src = "Victory.jpg"
+            button1.innerHTML = "Leave?"
+            RouxlsWon = 1
+            button2.style.display = "none"
+            button3.style.display = "none"
+            button4.style.display = "none"
+            setTimeout(() => {
+                cooldown = 0
+            }, 1)
+        }
+    }, time)
+}
+
+const LancerAttack = (defend, time) => {
+    setTimeout(() => {
+        if (LancerHP > 0) {
+            if (defend === 1) {
+                let LancerDamage = Math.round((17 - ShieldOwned/5*2)/2)
+                if (LancerDamage <= 0) {
+                    LancerDamage = 0
+                }
+                fountainInfo.innerHTML = "* Lancer attacks you and deals " + LancerDamage + " damage."
+                HP -= LancerDamage
+                hpText.innerHTML = "Your HP: " + HP
+                cooldown = 0
+            } else {
+                let LancerDamage = 17 - ShieldOwned/5*2
+                if (LancerDamage <= 0) {
+                    LancerDamage = 2
+                }
+                fountainInfo.innerHTML = "* Lancer attacks you and deals " + LancerDamage + " damage."
+                HP -= LancerDamage
+                hpText.innerHTML = "Your HP: " + HP
+                cooldown = 0
+            }
+        }
+        if (HP <= 0) {
+            cooldown = 1
+            HP = 0
+            hpText.innerHTML = "Your HP: " + HP
+            fountainInfo.innerHTML = "* You were defeated by Lancer."
+            FountainImage.src = "GameOver.png"
+            setTimeout(() => {
+                FountainImage.src = "Field_Location_1.jpg"
+                fountainInfo.innerHTML = "* Suddenly, you are in a strange field. This place doesn't feel real."
+                button1.innerHTML = "Go through door?"
+                button2.innerHTML = "Go right?"
+                button3.remove()
+                button4.remove()
+                HP = 100
+                hpText.innerHTML = "Your HP: " + HP
+                LancerhpText.remove()
+                LancerHP = 150
+                LocationInFountain = 1
+                cooldown = 0
+            }, 3000)
+        } else if (LancerHP <= 0) {
+            cooldown = 1
+            LancerHP = 0
+            LancerhpText.remove()
+            HP = 100
+            hpText.innerHTML = "Your HP: " + HP
+            LancerhpText.innerHTML = "Lancer HP: " + LancerHP
+            fountainInfo.innerHTML = "* You defeated Lancer! You win!"
+            FountainImage.src = "Victory.jpg"
+            button1.innerHTML = "Leave?"
+            LancerWon = 1
             button2.style.display = "none"
             button3.style.display = "none"
             button4.style.display = "none"
@@ -363,7 +494,7 @@ gen.addEventListener("click", () => {
                                             FountainImage.src = "Rouxls_kaard_battle.png"
                                             fountainInfo.innerHTML = "* You enter the first gate and face one of the guards - Rouxls Kaard."
                                             let RouxlsHPElement = document.createElement("p")
-                                            let RouxlsHPElementText = document.createTextNode("Rouxls HP: 100")
+                                            let RouxlsHPElementText = document.createTextNode("Rouxls HP: 200")
                                             RouxlsHPElement.appendChild(RouxlsHPElementText)
                                             BattleUI.appendChild(RouxlsHPElement)
                                             RouxlsHPElement.id = "rouxlsHPelement"
@@ -374,6 +505,48 @@ gen.addEventListener("click", () => {
                                             button3.innerHTML = "Use item?"
                                             button4.innerHTML = "Defend?"
                                             LocationInFountain = 10
+                                        } else if (LocationInFountain === 10 && cooldown === 0 && RouxlsHP > 0) {
+                                            cooldown = 1
+                                            fountainInfo.innerHTML = "* You attack with your sword and deal " + SwordOwned + " damage."
+                                            RouxlsHP -= SwordOwned
+                                            if (RouxlsHP < 0) {
+                                                RouxlsHP = 0
+                                            }
+                                            RouxlshpText.innerHTML = "Rouxls HP: " + RouxlsHP
+                                            RouxlsAttack(0, 1000)
+                                        } else if (LocationInFountain === 10 && cooldown === 0 && RouxlsHP <= 0) {
+                                            FountainImage.src = "Card_castle.jpg"
+                                            fountainInfo.innerHTML = "* In the castle there are three gates. Two of them contain the guards."
+                                            button1.innerHTML = "Enter the left gate?"
+                                            button2.style.display = "inline-block"
+                                            button2.innerHTML = "Enter the middle gate?"
+                                            button3.style.display = "inline-block"
+                                            button3.innerHTML = "Enter the right gate?"
+                                            button4.style.display = "inline-block"
+                                            button4.innerHTML = "Go back?"
+                                            LocationInFountain = 9
+                                        } else if (LocationInFountain === 9 && RouxlsWon === 1) {
+                                            fountainInfo.innerHTML = "* The first guard - Rouxls Kaard - is defeated."
+                                        } else if (LocationInFountain === 11 && cooldown === 0 && LancerHP > 0) {
+                                            cooldown = 1
+                                            fountainInfo.innerHTML = "* You attack with your sword and deal " + SwordOwned + " damage."
+                                            LancerHP -= SwordOwned
+                                            if (LancerHP < 0) {
+                                                LancerHP = 0
+                                            }
+                                            LancerhpText.innerHTML = "Lancer HP: " + LancerHP
+                                            LancerAttack(0, 1000)
+                                        } else if (LocationInFountain === 11 && cooldown === 0 && LancerHP <= 0) {
+                                            FountainImage.src = "Card_castle.jpg"
+                                            fountainInfo.innerHTML = "* In the castle there are three gates. Two of them contain the guards."
+                                            button1.innerHTML = "Enter the left gate?"
+                                            button2.style.display = "inline-block"
+                                            button2.innerHTML = "Enter the middle gate?"
+                                            button3.style.display = "inline-block"
+                                            button3.innerHTML = "Enter the right gate?"
+                                            button4.style.display = "inline-block"
+                                            button4.innerHTML = "Go back?"
+                                            LocationInFountain = 9
                                         }
                                     })
                                     button1.addEventListener("mouseenter", () => {
@@ -511,6 +684,45 @@ gen.addEventListener("click", () => {
                                                     button3.style.display = "none"
                                                     button4.innerHTML = "Go back?"
                                                     LocationInFountain = 7
+                                                } else if (LocationInFountain === 10 && cooldown === 0) {
+                                                    cooldown = 1
+                                                    if (DarkCandyOwned > 0) {
+                                                        fountainInfo.innerHTML = "* You ate a dark candy and restored 100 HP."
+                                                        DarkCandyOwned -= 1
+                                                        candiesText.innerHTML = "Dark candies: " + DarkCandyOwned
+                                                        HP = 100
+                                                        hpText.innerHTML = "Your HP: " + HP
+                                                    } else {
+                                                        fountainInfo.innerHTML = "* You don't have any Dark Candies left."}
+                                                    RouxlsAttack(0, 1000)
+                                                } else if (LocationInFountain === 9 && LancerWon === 0) {
+                                                    FountainImage.src = "Lancer.png"
+                                                    fountainInfo.innerHTML = "* You enter the second gate and face one of the guards - Lancer."
+                                                    let LancerHPElement = document.createElement("p")
+                                                    let LancerHPElementText = document.createTextNode("Lancer HP: 150")
+                                                    LancerHPElement.appendChild(LancerHPElementText)
+                                                    BattleUI.appendChild(LancerHPElement)
+                                                    LancerHPElement.id = "lancerHPelement"
+                                                    LancerHPElement.classList.add("BattleUIText")
+                                                    LancerhpText = document.getElementById("lancerHPelement")
+                                                    button1.innerHTML = "Fight?"
+                                                    button2.innerHTML = "Talk?"
+                                                    button3.innerHTML = "Use item?"
+                                                    button4.innerHTML = "Defend?"
+                                                    LocationInFountain = 11
+                                                } else if (LocationInFountain === 11 && cooldown === 0) {
+                                                    cooldown = 1
+                                                    if (DarkCandyOwned > 0) {
+                                                        fountainInfo.innerHTML = "* You ate a dark candy and restored 100 HP."
+                                                        DarkCandyOwned -= 1
+                                                        candiesText.innerHTML = "Dark candies: " + DarkCandyOwned
+                                                        HP = 100
+                                                        hpText.innerHTML = "Your HP: " + HP
+                                                    } else {
+                                                        fountainInfo.innerHTML = "* You don't have any Dark Candies left."}
+                                                    LancerAttack(0, 1000)
+                                                } else if (LocationInFountain === 9 && LancerWon === 1) {
+                                                    fountainInfo.innerHTML = "* The second guard - Lancer - is defeated."
                                                 }
                                             })
                                             button4.addEventListener("click", () => {
@@ -585,6 +797,14 @@ gen.addEventListener("click", () => {
                                                     button3.style.display = "none"
                                                     button4.innerHTML = "Go back?"
                                                     LocationInFountain = 8
+                                                } else if (LocationInFountain === 10 && cooldown === 0) {
+                                                    cooldown = 1
+                                                    fountainInfo.innerHTML = "* You defend. Reduced damage taken."
+                                                    RouxlsAttack(1, 1000)
+                                                } else if (LocationInFountain === 11 && cooldown === 0) {
+                                                    cooldown = 1
+                                                    fountainInfo.innerHTML = "* You defend. Reduced damage taken."
+                                                    LancerAttack(1, 1000)
                                                 }
                                             })
                                             button3.addEventListener("mouseenter", () => {
@@ -670,6 +890,14 @@ gen.addEventListener("click", () => {
                                                     }
                                                 }, 1000)
                                             }
+                                        } else if (LocationInFountain === 10 && cooldown === 0) {
+                                            cooldown = 1
+                                            fountainInfo.innerHTML = "* You tried to reason with Rouxls, but his accent was too strong to understand."
+                                            RouxlsAttack(0, 3000)
+                                        } else if (LocationInFountain === 11 && cooldown === 0) {
+                                            cooldown = 1
+                                            fountainInfo.innerHTML = "* You asked Lancer why he's fighting you, and he says because it's fun."
+                                            LancerAttack(0, 3000)
                                         }
                                     })
                                     DarkFountain.remove()

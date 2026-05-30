@@ -1,5 +1,7 @@
 Testing mode stats:
 
+let RouxlsHP = 1
+let LancerHP = 1
 let EnemyHP = 1
 let cooldown = 0
 
@@ -16,7 +18,9 @@ let FountainUnlocked = 0
 
 Regular game stats:
 
-let EnemyHP = 1000
+let RouxlsHP = 200
+let LancerHP = 150
+let EnemyHP = 500
 let cooldown = 0
 
 let money = 0
