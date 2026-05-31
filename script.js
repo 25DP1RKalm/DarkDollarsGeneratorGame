@@ -43,11 +43,14 @@ let CodeSolved = 0
 let CodeBeingSolved = 0
 let RouxlshpText
 let LancerhpText
+let KinghpText
 let RouxlsWon = 0
 let LancerWon = 0
+let KingWon = 0
 
 let RouxlsHP = 200
 let LancerHP = 150
+let KingHP = 300
 let EnemyHP = 500
 let cooldown = 0
 
@@ -247,6 +250,70 @@ const LancerAttack = (defend, time) => {
             button2.style.display = "none"
             button3.style.display = "none"
             button4.style.display = "none"
+            setTimeout(() => {
+                cooldown = 0
+            }, 1)
+        }
+    }, time)
+}
+
+const KingAttack = (defend, time) => {
+    setTimeout(() => {
+        if (KingHP > 0) {
+            if (defend === 1) {
+                let KingDamage = Math.round((20 - ShieldOwned/5*2)/2)
+                if (KingDamage <= 0) {
+                    KingDamage = 0
+                }
+                fountainInfo.innerHTML = "* The Chaos King attacks you and deals " + KingDamage + " damage."
+                HP -= KingDamage
+                hpText.innerHTML = "Your HP: " + HP
+                cooldown = 0
+            } else {
+                let KingDamage = 20 - ShieldOwned/5*2
+                if (KingDamage <= 0) {
+                    KingDamage = 2
+                }
+                fountainInfo.innerHTML = "* Chaos King attacks you and deals " + KingDamage + " damage."
+                HP -= KingDamage
+                hpText.innerHTML = "Your HP: " + HP
+                cooldown = 0
+            }
+        }
+        if (HP <= 0) {
+            cooldown = 1
+            HP = 0
+            hpText.innerHTML = "Your HP: " + HP
+            fountainInfo.innerHTML = "* You were defeated by the Chaos King."
+            FountainImage.src = "GameOver.png"
+            setTimeout(() => {
+                FountainImage.src = "Field_Location_1.jpg"
+                fountainInfo.innerHTML = "* Suddenly, you are in a strange field. This place doesn't feel real."
+                button1.innerHTML = "Go through door?"
+                button2.innerHTML = "Go right?"
+                button3.remove()
+                button4.remove()
+                HP = 100
+                hpText.innerHTML = "Your HP: " + HP
+                KinghpText.remove()
+                KingHP = 300
+                LocationInFountain = 1
+                cooldown = 0
+            }, 3000)
+        } else if (KingHP <= 0) {
+            cooldown = 1
+            KingHP = 0
+            KinghpText.remove()
+            HP = 100
+            hpText.innerHTML = "Your HP: " + HP
+            KinghpText.innerHTML = "Chaos King HP: " + KingHP
+            fountainInfo.innerHTML = "* You defeated the Chaos King! You win!"
+            FountainImage.src = "Victory.jpg"
+            button1.innerHTML = "Finish the game?"
+            KingWon = 1
+            button2.style.display = "none"
+            button3.style.display = "none"
+            button4.innerHTML = "Go back?"
             setTimeout(() => {
                 cooldown = 0
             }, 1)
@@ -480,7 +547,7 @@ gen.addEventListener("click", () => {
                                             button1.innerHTML = "Enter castle?"
                                             button4.innerHTML = "Go back?"
                                             LocationInFountain = 8
-                                        } else if (LocationInFountain === 8) {
+                                        } else if (LocationInFountain === 8 && LancerWon === 0 && RouxlsWon === 0 && KingWon === 0) {
                                             FountainImage.src = "Card_castle.jpg"
                                             fountainInfo.innerHTML = "* In the castle there are three gates. Two of them contain the guards."
                                             button1.innerHTML = "Enter the left gate?"
@@ -514,7 +581,7 @@ gen.addEventListener("click", () => {
                                             }
                                             RouxlshpText.innerHTML = "Rouxls HP: " + RouxlsHP
                                             RouxlsAttack(0, 1000)
-                                        } else if (LocationInFountain === 10 && cooldown === 0 && RouxlsHP <= 0) {
+                                        } else if (LocationInFountain === 10 && cooldown === 0 && RouxlsHP <= 0 && LancerWon === 0) {
                                             FountainImage.src = "Card_castle.jpg"
                                             fountainInfo.innerHTML = "* In the castle there are three gates. Two of them contain the guards."
                                             button1.innerHTML = "Enter the left gate?"
@@ -536,7 +603,7 @@ gen.addEventListener("click", () => {
                                             }
                                             LancerhpText.innerHTML = "Lancer HP: " + LancerHP
                                             LancerAttack(0, 1000)
-                                        } else if (LocationInFountain === 11 && cooldown === 0 && LancerHP <= 0) {
+                                        } else if (LocationInFountain === 11 && cooldown === 0 && LancerHP <= 0 && RouxlsWon === 0) {
                                             FountainImage.src = "Card_castle.jpg"
                                             fountainInfo.innerHTML = "* In the castle there are three gates. Two of them contain the guards."
                                             button1.innerHTML = "Enter the left gate?"
@@ -547,6 +614,67 @@ gen.addEventListener("click", () => {
                                             button4.style.display = "inline-block"
                                             button4.innerHTML = "Go back?"
                                             LocationInFountain = 9
+                                        } else if (LocationInFountain === 10 && cooldown === 0 && RouxlsHP <= 0 && LancerWon === 1) {
+                                            FountainImage.src = "Card_castle.jpg"
+                                            fountainInfo.innerHTML = "* Both guards are defeated. The central gate is now open."
+                                            button1.innerHTML = "Enter the left gate?"
+                                            button2.style.display = "inline-block"
+                                            button2.innerHTML = "Enter the middle gate?"
+                                            button3.style.display = "inline-block"
+                                            button3.innerHTML = "Enter the right gate?"
+                                            button4.style.display = "inline-block"
+                                            button4.innerHTML = "Go back?"
+                                            LocationInFountain = 9
+                                        } else if (LocationInFountain === 11 && cooldown === 0 && LancerHP <= 0 && RouxlsWon === 1) {
+                                            FountainImage.src = "Card_castle.jpg"
+                                            fountainInfo.innerHTML = "* Both guards are defeated. The central gate is now open."
+                                            button1.innerHTML = "Enter the left gate?"
+                                            button2.style.display = "inline-block"
+                                            button2.innerHTML = "Enter the middle gate?"
+                                            button3.style.display = "inline-block"
+                                            button3.innerHTML = "Enter the right gate?"
+                                            button4.style.display = "inline-block"
+                                            button4.innerHTML = "Go back?"
+                                            LocationInFountain = 9
+                                        } else if (LocationInFountain === 8 && LancerWon === 1 && RouxlsWon === 1 && KingWon === 0) {
+                                            FountainImage.src = "Card_castle.jpg"
+                                            fountainInfo.innerHTML = "* Both guards are defeated. The central gate is now open."
+                                            button1.innerHTML = "Enter the left gate?"
+                                            button2.style.display = "inline-block"
+                                            button2.innerHTML = "Enter the middle gate?"
+                                            button3.style.display = "inline-block"
+                                            button3.innerHTML = "Enter the right gate?"
+                                            button4.innerHTML = "Go back?"
+                                            LocationInFountain = 9
+                                        } else if (LocationInFountain === 12 && cooldown === 0 && KingHP > 0) {
+                                            cooldown = 1
+                                            fountainInfo.innerHTML = "* You attack with your sword and deal " + SwordOwned + " damage."
+                                            KingHP -= SwordOwned
+                                            if (KingHP < 0) {
+                                                KingHP = 0
+                                            }
+                                            KinghpText.innerHTML = "Chaos King HP: " + KingHP
+                                            KingAttack(0, 1000)
+                                        } else if (LocationInFountain === 8 && KingWon === 1) {
+                                            FountainImage.src = "Card_castle.jpg"
+                                            fountainInfo.innerHTML = "* The Chaos King is defeated."
+                                            button1.innerHTML = "Enter the left gate?"
+                                            button2.style.display = "inline-block"
+                                            button2.innerHTML = "Enter the middle gate?"
+                                            button3.style.display = "inline-block"
+                                            button3.innerHTML = "Enter the right gate?"
+                                            button4.innerHTML = "Go back?"
+                                            LocationInFountain = 9
+                                        } else if (LocationInFountain === 12 && cooldown === 0 && KingHP <= 0) {
+                                            fountainInfo.innerHTML = "* Congrats! You have completed the entire game!"
+                                            FountainImage.src = "End.jpg"
+                                            button1.style.display = "none"
+                                            button2.style.display = "none"
+                                            button3.style.display = "none"
+                                            button4.style.display = "none"
+                                            hpText.remove()
+                                            KinghpText.remove()
+                                            inventory.style.display = "none"
                                         }
                                     })
                                     button1.addEventListener("mouseenter", () => {
@@ -611,7 +739,7 @@ gen.addEventListener("click", () => {
                                                     FountainImage.src = "watercooler.jpg"
                                                     fountainInfo.innerHTML = "* You enter the hole and find the thing that was living there, THE WATERCOOLER."
                                                     let EnemyHPElement = document.createElement("p")
-                                                    let EnemyHPElementText = document.createTextNode("Watercooler HP: 1000")
+                                                    let EnemyHPElementText = document.createTextNode("Watercooler HP: 500")
                                                     EnemyHPElement.appendChild(EnemyHPElementText)
                                                     BattleUI.appendChild(EnemyHPElement)
                                                     EnemyHPElement.id = "enemyHPelement"
@@ -723,6 +851,17 @@ gen.addEventListener("click", () => {
                                                     LancerAttack(0, 1000)
                                                 } else if (LocationInFountain === 9 && LancerWon === 1) {
                                                     fountainInfo.innerHTML = "* The second guard - Lancer - is defeated."
+                                                } else if (LocationInFountain === 12 && cooldown === 0) {
+                                                    cooldown = 1
+                                                    if (DarkCandyOwned > 0) {
+                                                        fountainInfo.innerHTML = "* You ate a dark candy and restored 100 HP."
+                                                        DarkCandyOwned -= 1
+                                                        candiesText.innerHTML = "Dark candies: " + DarkCandyOwned
+                                                        HP = 100
+                                                        hpText.innerHTML = "Your HP: " + HP
+                                                    } else {
+                                                        fountainInfo.innerHTML = "* You don't have any Dark Candies left."}
+                                                    KingAttack(0, 1000)
                                                 }
                                             })
                                             button4.addEventListener("click", () => {
@@ -805,6 +944,20 @@ gen.addEventListener("click", () => {
                                                     cooldown = 1
                                                     fountainInfo.innerHTML = "* You defend. Reduced damage taken."
                                                     LancerAttack(1, 1000)
+                                                } else if (LocationInFountain === 12 && cooldown === 0 && KingHP <= 0) {
+                                                    FountainImage.src = "Card_castle.jpg"
+                                                    fountainInfo.innerHTML = "* The Chaos King is defeated."
+                                                    button1.innerHTML = "Enter the left gate?"
+                                                    button2.style.display = "inline-block"
+                                                    button2.innerHTML = "Enter the middle gate?"
+                                                    button3.style.display = "inline-block"
+                                                    button3.innerHTML = "Enter the right gate?"
+                                                    button4.innerHTML = "Go back?"
+                                                    LocationInFountain = 9
+                                                } else if (LocationInFountain === 12 && cooldown === 0) {
+                                                    cooldown = 1
+                                                    fountainInfo.innerHTML = "* You defend. Reduced damage taken."
+                                                    KingAttack(1, 1000)
                                                 }
                                             })
                                             button3.addEventListener("mouseenter", () => {
@@ -898,6 +1051,40 @@ gen.addEventListener("click", () => {
                                             cooldown = 1
                                             fountainInfo.innerHTML = "* You asked Lancer why he's fighting you, and he says because it's fun."
                                             LancerAttack(0, 3000)
+                                        } else if (LocationInFountain === 9 && RouxlsWon === 0 && LancerWon === 0 && KingWon === 0) {
+                                            fountainInfo.innerHTML = "* The gate is closed. It seems you need to defeat the guards to open it."
+                                        } else if (LocationInFountain === 9 && RouxlsWon === 1 && LancerWon === 0 && KingWon === 0) {
+                                            fountainInfo.innerHTML = "* The gate is closed. It seems you need to defeat the guards to open it."
+                                        } else if (LocationInFountain === 9 && RouxlsWon === 0 && LancerWon === 1 && KingWon === 0) {
+                                            fountainInfo.innerHTML = "* The gate is closed. It seems you need to defeat the guards to open it."
+                                        } else if (LocationInFountain === 9 && RouxlsWon === 1 && LancerWon === 1 && KingWon === 0) {
+                                            FountainImage.src = "Chaos_king.png"
+                                            fountainInfo.innerHTML = "* You enter the central gate and face the Chaos King."
+                                            let KingHPElement = document.createElement("p")
+                                            let KingHPElementText = document.createTextNode("Chaos King HP: 300")
+                                            KingHPElement.appendChild(KingHPElementText)
+                                            BattleUI.appendChild(KingHPElement)
+                                            KingHPElement.id = "kingHPelement"
+                                            KingHPElement.classList.add("BattleUIText")
+                                            KinghpText = document.getElementById("kingHPelement")
+                                            button1.innerHTML = "Fight?"
+                                            button2.innerHTML = "Talk?"
+                                            button3.innerHTML = "Use item?"
+                                            button4.innerHTML = "Defend?"
+                                            LocationInFountain = 12
+                                        } else if (LocationInFountain === 12 && cooldown === 0) {
+                                            cooldown = 1
+                                            fountainInfo.innerHTML = "* You tried to reason with the King, but he doesn't listen."
+                                            KingAttack(0, 3000)
+                                        } else if (LocationInFountain === 9 && KingWon === 1) {
+                                            fountainInfo.innerHTML = "* You defeated the Chaos King! You win!"
+                                            FountainImage.src = "Victory.jpg"
+                                            button1.innerHTML = "Finish the game?"
+                                            KingWon = 1
+                                            button2.style.display = "none"
+                                            button3.style.display = "none"
+                                            button4.innerHTML = "Go back?"
+                                            LocationInFountain = 12
                                         }
                                     })
                                     DarkFountain.remove()

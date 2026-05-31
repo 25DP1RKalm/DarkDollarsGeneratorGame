@@ -2,6 +2,7 @@ Testing mode stats:
 
 let RouxlsHP = 1
 let LancerHP = 1
+let KingHP = 1
 let EnemyHP = 1
 let cooldown = 0
 
@@ -20,6 +21,7 @@ Regular game stats:
 
 let RouxlsHP = 200
 let LancerHP = 150
+let KingHP = 300
 let EnemyHP = 500
 let cooldown = 0
 
