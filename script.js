@@ -675,6 +675,26 @@ gen.addEventListener("click", () => {
                                             hpText.remove()
                                             KinghpText.remove()
                                             inventory.style.display = "none"
+                                        } else if (LocationInFountain === 8 && LancerWon === 1 && RouxlsWon === 0 && KingWon === 0) {
+                                            FountainImage.src = "Card_castle.jpg"
+                                            fountainInfo.innerHTML = "* In the castle there are three gates. Two of them contain the guards."
+                                            button1.innerHTML = "Enter the left gate?"
+                                            button2.style.display = "inline-block"
+                                            button2.innerHTML = "Enter the middle gate?"
+                                            button3.style.display = "inline-block"
+                                            button3.innerHTML = "Enter the right gate?"
+                                            button4.innerHTML = "Go back?"
+                                            LocationInFountain = 9
+                                        } else if (LocationInFountain === 8 && LancerWon === 0 && RouxlsWon === 1 && KingWon === 0) {
+                                            FountainImage.src = "Card_castle.jpg"
+                                            fountainInfo.innerHTML = "* In the castle there are three gates. Two of them contain the guards."
+                                            button1.innerHTML = "Enter the left gate?"
+                                            button2.style.display = "inline-block"
+                                            button2.innerHTML = "Enter the middle gate?"
+                                            button3.style.display = "inline-block"
+                                            button3.innerHTML = "Enter the right gate?"
+                                            button4.innerHTML = "Go back?"
+                                            LocationInFountain = 9
                                         }
                                     })
                                     button1.addEventListener("mouseenter", () => {
