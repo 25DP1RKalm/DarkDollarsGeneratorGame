@@ -51,7 +51,7 @@ let KingWon = 0
 let RouxlsHP = 200
 let LancerHP = 150
 let KingHP = 300
-let EnemyHP = 500
+let EnemyHP = 1000
 let cooldown = 0
 
 let money = 0
@@ -759,7 +759,7 @@ gen.addEventListener("click", () => {
                                                     FountainImage.src = "watercooler.jpg"
                                                     fountainInfo.innerHTML = "* You enter the hole and find the thing that was living there, THE WATERCOOLER."
                                                     let EnemyHPElement = document.createElement("p")
-                                                    let EnemyHPElementText = document.createTextNode("Watercooler HP: 500")
+                                                    let EnemyHPElementText = document.createTextNode("Watercooler HP: 1000")
                                                     EnemyHPElement.appendChild(EnemyHPElementText)
                                                     BattleUI.appendChild(EnemyHPElement)
                                                     EnemyHPElement.id = "enemyHPelement"
